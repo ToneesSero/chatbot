@@ -80,25 +80,32 @@ const ChatBot = ({ isOpen, onClose, user }) => {
 
   const processUserInput = (input) => {
     const lowerInput = input.toLowerCase();
-    
-    if (lowerInput.includes('оператор')) {
+
+    fetch("/api/nlp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: input })
+  })
+    .then(res => res.json())
+    .then(data => {
+        if (lowerInput.includes('оператор')) {
       transferToOperator();
       return;
     }
-    
-    let found = false;
-    for (const [data] of Object.entries(knowledgeBase)) {
-      if (data.questions.some(q => lowerInput.includes(q))) {
+
+      // let found = false;
         addBotMessage(data.answer);
-        found = true;
-        break;
-      }
-    }
+      // for (const [data] of Object.entries(knowledgeBase)) {
+      //   if (data.questions.some(q => lowerInput.includes(q))) {
+      //     addBotMessage(data.answer);
+      //     found = true;
+      //     break;
+      //   }
+      // }
+    })
+    .catch(() => console.log("Ошибка при обращении к боту"));
     
-    if (!found) {
-      addBotMessage('Не нашел ответа на ваш вопрос. Уточните, пожалуйста.');
-      showQuickReplies();
-    }
+
   };
 
   const transferToOperator = () => {

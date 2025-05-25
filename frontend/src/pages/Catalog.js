@@ -41,7 +41,7 @@ const Catalog = () => {
           {filteredProducts.map(product => (
             <div key={product.id} className="product-card">
               <div className="product-image">
-                <img src={`/images/${product.image}`} alt={product.name} />
+                <img src={`${product.image}`} alt={product.name} />
                 <div className="product-overlay">
                   <Link to={`/product/${product.id}`} className="quick-view">
                     Быстрый просмотр

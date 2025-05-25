@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './Features.css';
 
 const features = [
@@ -25,6 +25,8 @@ const features = [
 ];
 
 const Features = () => {
+
+
   return (
     <section className="features">
       <div className="container">
